@@ -2,7 +2,8 @@ const letters = document.querySelectorAll(".scoreboard-letter");
 const keyPress = document.querySelector("body");
 const word_url = "https://words.dev-apis.com/word-of-the-day";
 const validWordUrl = "https://words.dev-apis.com/validate-word";
-const buttonA = document.querySelector("#buttonA")
+const buttonA = document.querySelector("#buttonA");
+const container = document.getElementById("keyboard-buttons");
 let FirstRowIndex = 1;
 let word = "";
 let wordOfTheDayValue;
@@ -10,17 +11,28 @@ let validWordResultValue = null;
 let eventListenerEnabled = true;
 
 
+
+for (let i = 65; i <= 90; i++) {
+  const letter = String.fromCharCode(i);
+  const button = document.createElement("button");
+  button.innerText = letter;
+  button.addEventListener("click", handleButtonClick);
+  container.appendChild(button);
+}
+
+let backspaceButton = document.querySelector("#backspace")
+backspaceButton.addEventListener("click", handleBackspaceClick)
+
 async function validWord() {
   try {
     const loadingMessage = document.getElementById("loadingMessage");
     loadingMessage.style.display = "block";
-    
+
     // for (i = FirstRowIndex - 1; i > FirstRowIndex - 6; i--) {
     //   console.log(FirstRowIndex);
     //   let square = document.getElementById(`letter-number${i}`);
-    //   square.classList.add("loadingAnimation"); 
+    //   square.classList.add("loadingAnimation");
     // }
-
 
     const response = await fetch(validWordUrl, {
       method: "POST",
@@ -45,12 +57,10 @@ async function validWord() {
     // for (i = FirstRowIndex - 1; i > FirstRowIndex - 6; i--) {
     //   console.log(FirstRowIndex);
     //   let square = document.getElementById(`letter-number${i}`);
-    //   square.classList.remove("loadingAnimation"); 
+    //   square.classList.remove("loadingAnimation");
     // }
-
   }
 }
-
 
 async function wordOfTheDay() {
   const promise = await fetch(word_url);
@@ -64,46 +74,54 @@ async function wordOfTheDay() {
 wordOfTheDay();
 
 
+// buttonA.addEventListener("click", function () {
+//   if (word.length < 5){
+//     const input = document.getElementById(`letter-number${FirstRowIndex}`);
+//     FirstRowIndex++;
 
-  keyPress.addEventListener("keyup", async function (event) {
-    if (!eventListenerEnabled) {
-      return;
+//     word += buttonA.innerText;
+//     input.innerText = buttonA.innerText
+//   }else{
+//     return;
+//   }
+// });
+
+keyPress.addEventListener("keyup", async function (event) {
+  if (!eventListenerEnabled) {
+    return;
+  }
+
+  console.log("długość wyrazu", word, word.length)
+  console.log("1", word);
+  console.log("2", FirstRowIndex);
+  console.log(document.getElementById(`letter-number${FirstRowIndex}`));
+  if (isBackspace(event.key) && word.length > 0) {
+    // Handle Backspace key
+    console.log(FirstRowIndex);
+    if (FirstRowIndex > 0) {
+      const removeInput = document.getElementById(
+        `letter-number${FirstRowIndex - 1}`
+      );
+      FirstRowIndex = FirstRowIndex - 1;
+
+      removeInput.innerText = "";
+      word = word.slice(0, -1);
     }
-
-    console.log("1", word);
-    console.log("2", FirstRowIndex);
-    console.log(document.getElementById(`letter-number${FirstRowIndex}`));
-    if (isBackspace(event.key) && word.length > 0) {
-      // Handle Backspace key
-      console.log(FirstRowIndex);
-      if (FirstRowIndex > 0) {
-        const removeInput = document.getElementById(
-          `letter-number${FirstRowIndex - 1}`
-        );
-        FirstRowIndex = FirstRowIndex - 1;
-
-        removeInput.innerText = "";
-        word = word.slice(0, -1);
-      }
-      return;
-    }
+    return;
+  }
 
   if (word.length < 5 && /^[a-zA-Z]$/.test(event.key)) {
-
-    
-
-
     const input = document.getElementById(`letter-number${FirstRowIndex}`);
     let letter = event.key;
 
     if (isLetter(letter)) {
       console.log("jest");
-      input.innerText = letter.toLowerCase();
+      input.innerText = letter.toUpperCase();
       console.log("letter", typeof letter, letter);
 
       if (input.innerText !== "") {
         FirstRowIndex++;
-        word += input.innerText;
+        word += input.innerText.toLowerCase();
       }
     }
   } else if (word.length === 5 && isEnter(event.key)) {
@@ -124,16 +142,12 @@ wordOfTheDay();
         return result;
       }, []);
 
-      
-      
-
       addGreenClassToLetters(sameIndexLetters, FirstRowIndex);
 
       const winnerBaner = document.querySelector(".alertWinner");
       winnerBaner.classList.add("displayyes");
       word = "";
       eventListenerEnabled = false;
-      
     } else if (validWordResultValue == false) {
       for (i = FirstRowIndex - 1; i > FirstRowIndex - 6; i--) {
         console.log(FirstRowIndex);
@@ -256,4 +270,46 @@ function findMatchingIndexes(wordArray, wordOfTheDayValueArray) {
 }
 
 
+function handleButtonClick(event) {
+  const button = event.target;
+  const letter = button.innerText;
+
+  if (word.length < 5) {
+    const input = document.getElementById(`letter-number${FirstRowIndex}`);
+    
+    
+
+    word += letter.toLowerCase();
+    FirstRowIndex++;
+
+    
+    input.innerText = letter;
+    console.log(word, word.length)
+  } else {
+    return;
+  }
+}
+
+
+function handleBackspaceClick(event) {
+  const button = event.target;
+  const letter = button.innerText;
+  const input = document.getElementById(`letter-number${FirstRowIndex}`);
+  if (word.length > 0) {
+    
+    
+    
+
+    if (FirstRowIndex > 0) {
+      const removeInput = document.getElementById(
+        `letter-number${FirstRowIndex - 1}`
+      );
+      FirstRowIndex = FirstRowIndex - 1;
+
+      removeInput.innerText = "";
+      word = word.slice(0, -1);
+    }
+    return;
+}
+}
 
