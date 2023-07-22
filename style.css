@@ -1,0 +1,128 @@
+
+body {
+    overflow: hidden;
+}
+
+html {
+  margin: 0;
+  background-color: #333;
+  color: rgb(255, 243, 243);
+  
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Comfortaa", cursive;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 500px;  
+  font-size: 45px;
+  overflow: hidden;
+}
+
+.scoreboard {
+    position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+  width: 500px;
+  height: 600px;
+  row-gap: 10px;
+  column-gap: 10px;
+  font-size: 40px;
+}
+
+.scoreboard-letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  position: relative;
+  width: 92px;
+  height: 92px;
+}
+.scoreboard-letter .content {
+  position: absolute;
+}
+
+.newClass {
+  border: 1px solid red;
+  background-color: red;
+  color: white;
+}
+
+.greyClass {
+  background-color: rgb(85, 85, 85);
+  color: white;
+}
+
+.yellowClass {
+  background-color: rgb(196, 196, 29);
+}
+
+.greenClass {
+  background-color: rgb(36, 148, 36) !important;
+}
+
+h3 {
+    margin: 20px;
+}
+
+.alertWinner{
+    position: absolute;
+    z-index: 10;
+    display: none;
+    
+}
+
+.alertLoser{
+    position: absolute;
+    z-index: 10;
+    display: none;
+    top: 40px;
+    
+}
+
+
+.displayyes {
+    display: block;
+}
+
+#loadingMessage {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: 40px;
+
+}
+
+
+.loadingAnimation {
+    animation-name: shrinkExpand;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  
+  
+  
+  @keyframes shrinkExpand {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.8); /* Shrink the element at 50% of the animation */
+    }
+    100% {
+      transform: scale(1); /* Expand back to normal size at the end */
+    }
+
+  }
+
+  #buttonA {
+    z-index: 20;
+  }
