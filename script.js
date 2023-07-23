@@ -9,19 +9,39 @@ let word = "";
 let wordOfTheDayValue;
 let validWordResultValue = null;
 let eventListenerEnabled = true;
+let buttonConfirmClicked = false;
 
 
 
-for (let i = 65; i <= 90; i++) {
-  const letter = String.fromCharCode(i);
-  const button = document.createElement("button");
-  button.innerText = letter;
-  button.addEventListener("click", handleButtonClick);
-  container.appendChild(button);
+
+const qwertyLayout = [
+  ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+  ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+  ["Z", "X", "C", "V", "B", "N", "M"],
+];
+
+for (let row = 0; row < qwertyLayout.length; row++) {
+  const rowContainer = document.createElement("div");
+  rowContainer.className = "keyboard-row";
+
+  for (let col = 0; col < qwertyLayout[row].length; col++) {
+    const letter = qwertyLayout[row][col];
+    const button = document.createElement("button");
+    button.innerText = letter;
+    button.addEventListener("click", handleButtonClick);
+    rowContainer.appendChild(button);
+  }
+
+  container.appendChild(rowContainer);
 }
 
 let backspaceButton = document.querySelector("#backspace")
 backspaceButton.addEventListener("click", handleBackspaceClick)
+
+const buttonConfirm = document.getElementById("enter");
+buttonConfirm.addEventListener("click", handleButtonConfirmClick);
+
+
 
 async function validWord() {
   try {
@@ -124,9 +144,10 @@ keyPress.addEventListener("keyup", async function (event) {
         word += input.innerText.toLowerCase();
       }
     }
-  } else if (word.length === 5 && isEnter(event.key)) {
+  } else if ((word.length === 5 && isEnter(event.key)) || buttonConfirmClicked){
     await validWord(); // Wait for validWord function to complete
-
+    
+ 
     console.log(validWordResultValue, wordOfTheDayValue);
 
     if (validWordResultValue && word === wordOfTheDayValue) {
@@ -312,4 +333,99 @@ function handleBackspaceClick(event) {
     return;
 }
 }
+
+
+
+
+
+
+
+async function handleButtonConfirmClick() {
+  // Set the buttonConfirmClicked variable to true when the button is clicked
+
+    await validWord(); // Wait for validWord function to complete
+    
+ 
+    console.log(validWordResultValue, wordOfTheDayValue);
+
+    if (validWordResultValue && word === wordOfTheDayValue) {
+      console.log("super");
+
+      let wordArray = word.split("");
+      let wordOfTheDayValueArray = wordOfTheDayValue.split("");
+
+      const sameIndexLetters = wordArray.reduce((result, letter, index) => {
+        if (wordOfTheDayValueArray[index] === letter) {
+          result.push(index);
+        }
+        return result;
+      }, []);
+
+      addGreenClassToLetters(sameIndexLetters, FirstRowIndex);
+
+      const winnerBaner = document.querySelector(".alertWinner");
+      winnerBaner.classList.add("displayyes");
+      word = "";
+      eventListenerEnabled = false;
+    } else if (validWordResultValue == false) {
+      for (i = FirstRowIndex - 1; i > FirstRowIndex - 6; i--) {
+        console.log(FirstRowIndex);
+        let square = document.getElementById(`letter-number${i}`);
+        square.classList.add("newClass");
+
+        setTimeout(() => {
+          square.classList.remove("newClass");
+        }, 1000);
+      }
+    } else if (validWordResultValue && word != wordOfTheDayValue) {
+      let wordOfTheDayValueArray = wordOfTheDayValue.split("");
+      let wordArray = word.split("");
+      let greyArray = [];
+
+      const letterOccurrences = new Map();
+      const matchingIndexes = wordArray.reduce((indexes, letter, index) => {
+        const wordOccurrences = letterOccurrences.get(letter) || 0;
+        if (wordOfTheDayValueArray.includes(letter) && wordOccurrences < 1) {
+          indexes.push(index);
+          letterOccurrences.set(letter, wordOccurrences + 1);
+        } else {
+          greyArray.push(index);
+        }
+        return indexes;
+      }, []);
+
+      const sameIndexLetters = wordArray.reduce((result, letter, index) => {
+        if (wordOfTheDayValueArray[index] === letter) {
+          result.push(index);
+        }
+        return result;
+      }, []);
+
+      console.log(greyArray);
+      console.log(matchingIndexes);
+      console.log(sameIndexLetters);
+
+      addGreyClassToLetters(greyArray, FirstRowIndex);
+
+      addYellowClassToLetters(matchingIndexes, FirstRowIndex);
+
+      addGreenClassToLetters(sameIndexLetters, FirstRowIndex);
+
+      console.log("Rows", FirstRowIndex);
+
+      word = "";
+    } else {
+      word = "";
+    }
+    if (FirstRowIndex > 30) {
+      console.log(`You lost a word of day is: ${wordOfTheDayValue}`);
+      const winnerBaner = document.querySelector(".alertLoser");
+      winnerBaner.classList.add("displayyes");
+      winnerBaner.innerText = `;/ u lost word of the day is: ${wordOfTheDayValue}`;
+      word = "";
+    }
+    return;
+  
+}
+
 

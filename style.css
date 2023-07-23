@@ -22,6 +22,7 @@ html {
   font-weight: 500px;  
   font-size: 45px;
   overflow: hidden;
+  flex-direction: column;
 }
 
 .scoreboard {
@@ -29,11 +30,11 @@ html {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 
-  width: 500px;
-  height: 600px;
+  width: 400px;
+  height: 450px;
   row-gap: 10px;
-  column-gap: 10px;
-  font-size: 40px;
+  /* column-gap: 10px; */
+  font-size: 35px;
 }
 
 .scoreboard-letter {
@@ -42,8 +43,8 @@ html {
   align-items: center;
   border: 2px solid black;
   position: relative;
-  width: 92px;
-  height: 92px;
+  width: 56px;
+  height: 56px;
 }
 .scoreboard-letter .content {
   position: absolute;
@@ -125,4 +126,120 @@ h3 {
 
   #backspace {
     z-index: 20;
+  }
+
+  #keyboard-buttons {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-size: small;
+    min-width: 435px;
+    min-height: 120;
+  }
+
+  .qwertyContainer {
+    display: flex;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 100%;
+    height: 30%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+
+  }
+
+
+  button {
+    width: 30px;
+    height: 30px;
+    transform: scale(1.2);
+    margin: 8px;
+    background-color: #4d4d4d;
+    border: #fff;
+    color: rgb(216, 216, 216);
+    border-radius: 10px;
+  }
+
+  #enter{
+    width: 75px;
+    height: 40px;
+  }
+
+  #backspace {
+    width: 75px;
+    height: 40px;
+  }
+
+  .undoEnterContainer{
+    margin: 0;
+    position: relative;
+    bottom: 10px;
+  }
+
+/* smaller screen css */
+  @media screen and (max-width: 768px) {
+
+
+    .scoreboard {
+      position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  
+    width: 80vw;
+    height: 40wh;
+    row-gap: 10px;
+    /* column-gap: 10px; */
+    font-size: 25px;
+  }
+  
+  .scoreboard-letter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    position: relative;
+    width: 40px;
+    height: 40px;
+  }
+  
+  button {
+    width: 23px;
+    height: 23px;
+    margin: 6px;
+    border-radius: 5px;
+  }
+
+  .qwertyContainer {
+    width: 60vw;
+  }
+  #loadingMessage {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: 5px;
+    font-size: 20px;
+
+}
+.alertWinner{
+  position: absolute;
+  z-index: 10;
+  display: inline;
+  top: 5px;
+  font-size: 20px;
+}
+
+.alertLoser{
+  position: absolute;
+  z-index: 10;
+  display: none;
+  top: 5px;
+  font-size: 20px;
+}
+  
+  
   }
