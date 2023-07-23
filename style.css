@@ -228,7 +228,7 @@ h3 {
 .alertWinner{
   position: absolute;
   z-index: 10;
-  display: inline;
+  display: none;
   top: 5px;
   font-size: 20px;
 }
