@@ -303,6 +303,9 @@ function findMatchingIndexes(wordArray, wordOfTheDayValueArray) {
 
 
 function handleButtonClick(event) {
+  if (!eventListenerEnabled) {
+    return;
+  }
   const button = event.target;
   const letter = button.innerText;
 
