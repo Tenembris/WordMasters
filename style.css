@@ -194,7 +194,7 @@ h3 {
     z-index: 15;
     background-color: #333;
     column-gap: 1px;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
