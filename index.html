@@ -14,6 +14,29 @@
   </head>
   <body>
     <div class="container">
+      <div><button id="rulesButton">?</button></div>
+      <div class="rulesContainer">
+        <button class="buttonExit">✕</button>
+        <h2>Rules</h2>
+
+        <div class="exaple">
+          <div class="scoreboard-letter LetterGreen">W</div>
+          <div class="scoreboard-letter LetterGrey" >O</div>
+          <div class="scoreboard-letter LetterGrey">L</div>
+          <div class="scoreboard-letter LetterGrey">V</div>
+          <div class="scoreboard-letter LetterYellow">E</div>
+        </div>
+        <div class="rulesExplainContainer">
+          <ul class="rulesList">
+            <li>Each guess must be a valid 5-letter word.</li>
+            <li><span class="LetterGreen">Green tiles</span> - letter is in the word and in the same place</li>
+            <li><span class="LetterYellow">Yellow tiles</span> letter is in word but in wrong place</li>
+            <li><span class="LetterGrey">Grey tiles </span>- word doesn't containt this letter</li>
+            <li><span class="LetterRed">Red tiles</span> - word that you provided is not existing</li>
+            <li>Guess the Word of the Day to Win!</li>
+          </ul>
+        </div>
+      </div>
       <div id="loadingMessage">Loading...</div>
       <div class="alertWinner">🏆 Gj u win! 🏆</div>
       <div class="alertLoser"></div>
@@ -51,16 +74,14 @@
         <div class="scoreboard-letter" id="letter-number30"></div>
       </div>
 
-     <div class="qwertyContainer">
-        
-
+      <div class="qwertyContainer">
         <div id="keyboard-buttons"></div>
         <div class="undoEnterContainer">
-            <button id="backspace">undo</button>
-        <button id="enter">enter</button>
+          <button id="backspace">undo</button>
+          <button id="enter">enter</button>
         </div>
       </div>
-     </div>
+    </div>
 
     <script src="script.js"></script>
   </body>

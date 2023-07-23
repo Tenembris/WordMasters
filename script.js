@@ -4,6 +4,9 @@ const word_url = "https://words.dev-apis.com/word-of-the-day";
 const validWordUrl = "https://words.dev-apis.com/validate-word";
 const buttonA = document.querySelector("#buttonA");
 const container = document.getElementById("keyboard-buttons");
+const buttonExitRules = document.querySelector(".buttonExit")
+const buttonRulesButton = document.querySelector("#rulesButton")
+const rulesContainer = document.querySelector(".rulesContainer")
 let FirstRowIndex = 1;
 let word = "";
 let wordOfTheDayValue;
@@ -14,6 +17,14 @@ let buttonConfirmClicked = false;
 
 
 
+buttonExitRules.addEventListener("click", function(){
+  rulesContainer.style.display = "none";
+})
+
+
+buttonRulesButton.addEventListener("click", function(){
+  rulesContainer.style.display = "flex";
+})
 const qwertyLayout = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
   ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
